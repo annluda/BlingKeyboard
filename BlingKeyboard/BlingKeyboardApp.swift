@@ -26,25 +26,25 @@ struct BlingKeyboardApp: App {
 
 class AppDelegate: NSObject, NSApplicationDelegate {
     private var statusItem: NSStatusItem?
-
+    private var isAlwaysOnTop: Bool = false
+    
     func applicationDidFinishLaunching(_ notification: Notification) {
         if let window = NSApplication.shared.windows.first {
-            
             if let screen = NSScreen.main?.visibleFrame {
                 let screenWidth = screen.width
                 let windowWidth = window.frame.width
                 let xPos = (screenWidth - windowWidth) / 2 + screen.origin.x
-                let yPos = 0.0 // screen.origin.y
+                let yPos = 0.0
                 window.setFrameOrigin(NSPoint(x: xPos, y: yPos))
             }
             
-            window.level = .floating
             window.isOpaque = false
             window.backgroundColor = .clear
             window.ignoresMouseEvents = false
             window.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary]
-            window.hasShadow = false // 移除阴影
-            window.styleMask = .borderless // 设置为无边框窗口
+            window.hasShadow = false
+            window.styleMask = .borderless
+            window.level = .normal
         }
         KeyboardMonitor.shared.start()
                 
@@ -58,8 +58,23 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             button.image = NSImage(systemSymbolName: "keyboard", accessibilityDescription: "BlingKeyboard")
             button.image?.isTemplate = true
             let menu = NSMenu()
+            let alwaysOnTopItem = NSMenuItem(
+                title: "Always on Top",
+                action: #selector(toggleAlwaysOnTop),
+                keyEquivalent: "t"
+            )
+            alwaysOnTopItem.state = .off
+            menu.addItem(alwaysOnTopItem)
             menu.addItem(NSMenuItem(title: "Quit", action: #selector(quitApp), keyEquivalent: "q"))
             statusItem?.menu = menu
+        }
+    }
+    
+    @objc private func toggleAlwaysOnTop(_ sender: NSMenuItem) {
+        isAlwaysOnTop.toggle()
+        sender.state = isAlwaysOnTop ? .on : .off
+        if let window = NSApplication.shared.windows.first {
+            window.level = isAlwaysOnTop ? .floating : .normal
         }
     }
     
