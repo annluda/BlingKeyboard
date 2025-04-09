@@ -83,10 +83,12 @@ struct ContentView: View {
                     ForEach(row) { key in
                         RoundedRectangle(cornerRadius: 6)
                             .fill(Color.gray.opacity(0.3))
-                            .shadow(color: self.highlightedKey == key.keyCode ? .white : .clear,
-                                  radius: self.highlightedKey == key.keyCode ? 8 : 0,
-                                  x: 0,
-                                  y: 0)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 6)
+                                    .stroke(self.highlightedKey == key.keyCode ? Color.white : Color.clear, lineWidth: 2)
+                                    .shadow(color: self.highlightedKey == key.keyCode ? .white : .clear,
+                                          radius: self.highlightedKey == key.keyCode ? 4 : 0)
+                            )
                             .overlay(Text(key.label).foregroundColor(.black))
                             .frame(width: key.width, height: 40)
                     }
