@@ -78,11 +78,15 @@ struct ContentView: View {
 
     var body: some View {
         VStack(spacing: 8) {
-            ForEach(keys, id: \ .self) { row in
+            ForEach(keys, id: \.self) { row in
                 HStack(spacing: 6) {
                     ForEach(row) { key in
                         RoundedRectangle(cornerRadius: 6)
-                            .fill(self.highlightedKey == key.keyCode ? Color.white : Color.gray.opacity(0.3))
+                            .fill(Color.gray.opacity(0.3))
+                            .shadow(color: self.highlightedKey == key.keyCode ? .white : .clear,
+                                  radius: self.highlightedKey == key.keyCode ? 8 : 0,
+                                  x: 0,
+                                  y: 0)
                             .overlay(Text(key.label).foregroundColor(.black))
                             .frame(width: key.width, height: 40)
                     }
