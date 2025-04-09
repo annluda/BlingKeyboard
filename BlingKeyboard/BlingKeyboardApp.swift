@@ -16,7 +16,6 @@ struct BlingKeyboardApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .frame(width: 800, height: 300)
                 .border(Color.clear, width: 0) // 添加这行确保无边框
         }
         .windowStyle(HiddenTitleBarWindowStyle())
@@ -34,7 +33,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 let screenWidth = screen.width
                 let windowWidth = window.frame.width
                 let xPos = (screenWidth - windowWidth) / 2 + screen.origin.x
-                let yPos = 0.0
+                let yPos = screen.origin.y
                 window.setFrameOrigin(NSPoint(x: xPos, y: yPos))
             }
             
@@ -43,7 +42,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             window.ignoresMouseEvents = false
             window.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary]
             window.hasShadow = false
-            window.styleMask = .borderless
+//            window.styleMask = .borderless
             window.level = .normal
         }
         KeyboardMonitor.shared.start()
@@ -203,7 +202,7 @@ struct VisualEffectView: NSViewRepresentable {
         view.blendingMode = .behindWindow
         view.state = .active
         view.material = .hudWindow
-//        view.alphaValue = 0.1
+        view.alphaValue = 0.2
         return view
     }
 
