@@ -4,7 +4,7 @@
 //
 //  Created by ald on 2025/4/9.
 //
-// BlingKeyboardApp.swift
+
 import SwiftUI
 import AppKit
 import Carbon.HIToolbox
@@ -17,8 +17,10 @@ struct BlingKeyboardApp: App {
         WindowGroup {
             ContentView()
                 .frame(width: 800, height: 300)
+                .border(Color.clear, width: 0) // 添加这行确保无边框
         }
         .windowStyle(HiddenTitleBarWindowStyle())
+        .windowResizability(.contentSize) // 固定窗口大小
     }
 }
 
@@ -30,6 +32,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             window.backgroundColor = .clear
             window.ignoresMouseEvents = false
             window.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary]
+            window.hasShadow = false // 移除阴影
+            window.styleMask = .borderless // 设置为无边框窗口
         }
         KeyboardMonitor.shared.start()
     }
@@ -78,7 +82,7 @@ struct ContentView: View {
                 HStack(spacing: 6) {
                     ForEach(row) { key in
                         RoundedRectangle(cornerRadius: 6)
-                            .fill(self.highlightedKey == key.keyCode ? Color.yellow : Color.gray.opacity(0.3))
+                            .fill(self.highlightedKey == key.keyCode ? Color.white : Color.gray.opacity(0.3))
                             .overlay(Text(key.label).foregroundColor(.black))
                             .frame(width: key.width, height: 40)
                     }
@@ -87,6 +91,7 @@ struct ContentView: View {
         }
         .padding()
         .background(VisualEffectView())
+        .clipShape(RoundedRectangle(cornerRadius: 10))
         .onReceive(NotificationCenter.default.publisher(for: .keyPressed)) { notification in
             if let keyCode = notification.object as? UInt16 {
                 self.highlightedKey = keyCode
@@ -148,6 +153,7 @@ struct VisualEffectView: NSViewRepresentable {
         view.blendingMode = .behindWindow
         view.state = .active
         view.material = .hudWindow
+        view.alphaValue = 0.1
         return view
     }
 
