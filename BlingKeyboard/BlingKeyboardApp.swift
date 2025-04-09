@@ -25,6 +25,8 @@ struct BlingKeyboardApp: App {
 }
 
 class AppDelegate: NSObject, NSApplicationDelegate {
+    private var statusItem: NSStatusItem?
+
     func applicationDidFinishLaunching(_ notification: Notification) {
         if let window = NSApplication.shared.windows.first {
             window.level = .floating
@@ -36,6 +38,24 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             window.styleMask = .borderless // 设置为无边框窗口
         }
         KeyboardMonitor.shared.start()
+                
+        setupStatusBarItem()
+    }
+    
+    private func setupStatusBarItem() {
+        statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
+        
+        if let button = statusItem?.button {
+            button.image = NSImage(systemSymbolName: "keyboard", accessibilityDescription: "BlingKeyboard")
+            button.image?.isTemplate = true
+            let menu = NSMenu()
+            menu.addItem(NSMenuItem(title: "Quit", action: #selector(quitApp), keyEquivalent: "q"))
+            statusItem?.menu = menu
+        }
+    }
+    
+    @objc private func quitApp() {
+        NSApplication.shared.terminate(self)
     }
 }
 
