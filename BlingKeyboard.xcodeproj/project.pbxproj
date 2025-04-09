@@ -6,8 +6,13 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		6DDB811A2DA62731002A5661 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6DDB81192DA62731002A5661 /* Info.plist */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		6D94FFAC2DA62312000B2484 /* BlingKeyboard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlingKeyboard.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6DDB81192DA62731002A5661 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -32,6 +37,7 @@
 		6D94FFA32DA62312000B2484 = {
 			isa = PBXGroup;
 			children = (
+				6DDB81192DA62731002A5661 /* Info.plist */,
 				6D94FFAE2DA62312000B2484 /* BlingKeyboard */,
 				6D94FFAD2DA62312000B2484 /* Products */,
 			);
@@ -109,6 +115,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6DDB811A2DA62731002A5661 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
