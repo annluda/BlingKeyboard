@@ -29,6 +29,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         if let window = NSApplication.shared.windows.first {
+            
+            if let screen = NSScreen.main?.visibleFrame {
+                let screenWidth = screen.width
+                let windowWidth = window.frame.width
+                let xPos = (screenWidth - windowWidth) / 2 + screen.origin.x
+                let yPos = 0.0 // screen.origin.y
+                window.setFrameOrigin(NSPoint(x: xPos, y: yPos))
+            }
+            
             window.level = .floating
             window.isOpaque = false
             window.backgroundColor = .clear
@@ -179,7 +188,7 @@ struct VisualEffectView: NSViewRepresentable {
         view.blendingMode = .behindWindow
         view.state = .active
         view.material = .hudWindow
-        view.alphaValue = 0.1
+//        view.alphaValue = 0.1
         return view
     }
 
